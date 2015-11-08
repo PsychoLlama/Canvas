@@ -69,32 +69,50 @@ var Canvas;
       if (last.axis === 'width') {
         height = width * (y / x);
         return this;
-        
+
       } else {
         width = height * (x / y);
         return this;
-        
+
       }
     },
 
-    rect: function (coord) {
+    rect: function (coord, splat) {
+      if (splat) {
+        coord = {
+          x: coord,
+          y: splat
+        };
+      }
       context.beginPath();
       context.rect(coord.x, coord.y, width, height);
 
       return this;
     },
 
-    square: function (coord) {
+    square: function (coord, splat) {
+      if (splat) {
+        coord = {
+          x: coord,
+          y: splat
+        };
+      }
       var axis = last.dimension,
         ratio = axis + ':' + axis;
-      
+
       return this.ratio(ratio).rect(coord);
     },
 
-    line: function (coord) {
+    line: function (coord, splat) {
+      if (splat) {
+        coord = {
+          x: coord,
+          y: splat
+        };
+      }
       var c = context;
-      c.lineWidth = width;
-      c.strokeWidth = width;
+      c.lineWidth = last.dimension;
+      c.strokeWidth = last.dimension;
 
       if (!line) {
         line = coord;
@@ -110,6 +128,8 @@ var Canvas;
     stroke: function (style) {
       this.color(style);
       line = undefined;
+      context.strokeWidth = last.dimension;
+      context.lineWidth = last.dimension;
       context.strokeStyle = color;
       context.stroke();
       context.closePath();
@@ -128,18 +148,11 @@ var Canvas;
 
     clear: function (style) {
       var c = canvas;
-      if (style) {
-        this.color(style);
-      }
 
-      return this
-        .height(c.height)
-        .width(c.width)
-        .rect({
-          x: 0,
-          y: 0
-        })
-        .fill();
+      height = c.height;
+      width = c.width;
+
+      return this.rect(0, 0).fill(style || 'white');
     }
   };
 }());
