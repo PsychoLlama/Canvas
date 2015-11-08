@@ -16,7 +16,7 @@ ctx.moveTo(100, 100);
 ctx.lineTo(300, 300);
 ctx.closePath();
 ctx.stroke();
-... are you kidding?
+// ... are you kidding?
 ```
 
 Here's what that same code looks like with canvas.js...
@@ -42,7 +42,7 @@ Set the width of your shape with this method. It will remember your setting unti
 
 ## .height(Number)
 
-Same behavior as `.width`.
+Same behavior as [`.width`](#widthnumber).
 
 ## .rect(Object/x, y)
 
