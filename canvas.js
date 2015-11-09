@@ -1,12 +1,20 @@
 var Canvas;
 (function () {
   'use strict';
-  var color, width, height, line, canvas, context, last;
+  var color, width, height, line, canvas, context, last, text, position;
 
-
+  position = {
+    x: 0,
+    y: 0
+  };
   color = '#303438';
   height = 10;
   width = 10;
+  text = {
+    family: 'sans-serif',
+    size: '18px',
+    string: ''
+  };
 
   last = {
     dimension: width,
@@ -21,6 +29,21 @@ var Canvas;
     return node[0];
   }
 
+  function drawText(type) {
+    if (!text.string) {
+      return;
+    }
+    context.textBaseline = 'top';
+    context.font = text.size + ' ' + text.family;
+    var args = [
+      text.string,
+      position.x,
+      position.y
+    ];
+    context[type + 'Text'].apply(context, args);
+    text.string = '';
+  }
+
   Canvas = function (opt) {
     if (!(this instanceof Canvas)) {
       return new Canvas(opt);
@@ -28,8 +51,12 @@ var Canvas;
     opt = opt || {};
     canvas = opt.canvas || canvas || $('canvas');
     context = canvas.getContext('2d');
+
     canvas.width = opt.width || canvas.width;
     canvas.height = opt.height || canvas.height;
+
+    this.canvas = canvas;
+    this.context = context;
   };
 
   Canvas.prototype = {
@@ -41,11 +68,16 @@ var Canvas;
       }
       color = style;
       last.color = style;
+      context.fillStyle = color;
+      context.strokeStyle = color;
 
       return this;
     },
 
     width: function (setting) {
+      if (setting === 'undefined') {
+        return this;
+      }
       width = setting;
       last.axis = 'width';
       last.dimension = setting;
@@ -54,11 +86,20 @@ var Canvas;
     },
 
     height: function (setting) {
+      if (setting === 'undefined') {
+        return this;
+      }
       height = setting;
       last.axis = 'height';
       last.dimension = setting;
 
       return this;
+    },
+
+    size: function (shape) {
+      return this
+        .width(shape.width)
+        .height(shape.height);
     },
 
     ratio: function (string) {
@@ -77,60 +118,79 @@ var Canvas;
       }
     },
 
-    rect: function (coord, splat) {
-      if (splat) {
-        coord = {
-          x: coord,
-          y: splat
-        };
-      }
+    rect: function (x, y) {
+      this.coord(x, y);
       context.beginPath();
-      context.rect(coord.x, coord.y, width, height);
+      context.rect(position.x, position.y, width, height);
 
       return this;
     },
 
-    square: function (coord, splat) {
-      if (splat) {
-        coord = {
-          x: coord,
-          y: splat
-        };
-      }
-      var axis = last.dimension,
-        ratio = axis + ':' + axis;
-
-      return this.ratio(ratio).rect(coord);
+    square: function (x, y) {
+      return this
+        .coord(x, y)
+        .ratio('1:1')
+        .rect(position);
     },
 
-    line: function (coord, splat) {
-      if (splat) {
-        coord = {
-          x: coord,
-          y: splat
-        };
-      }
+    line: function (x, y) {
+      this.coord(x, y);
       var c = context;
       c.lineWidth = last.dimension;
       c.strokeWidth = last.dimension;
 
       if (!line) {
-        line = coord;
+        line = position;
         c.beginPath();
-        c.moveTo(coord.x, coord.y);
+        c.moveTo(position.x, position.y);
       } else {
-        c.lineTo(coord.x, coord.y);
+        c.lineTo(position.x, position.y);
       }
+
+      return this;
+    },
+
+    coord: function (coord, splat) {
+      if (coord === undefined) {
+        return this;
+      }
+      if (splat) {
+        coord = {
+          x: coord || position.x,
+          y: splat || position.y
+        };
+      }
+      position = {
+        x: coord.x || position.x,
+        y: coord.y || position.y
+      };
+      return this;
+    },
+
+    font: function (input) {
+      var family, size, height = /\s?\d+(\w+)?/;
+
+      size = input.match(height);
+      family = input.replace(height, '').match(/(\w+-?)+/);
+
+      text.size = size ? size[0] : text.size;
+      text.family = family ? family[0] : text.family;
+      return this;
+    },
+
+    text: function (input) {
+      context.font = text.size + ' ' + text.family;
+      text.string = input;
 
       return this;
     },
 
     stroke: function (style) {
       this.color(style);
+      drawText('stroke');
       line = undefined;
       context.strokeWidth = last.dimension;
       context.lineWidth = last.dimension;
-      context.strokeStyle = color;
       context.stroke();
       context.closePath();
 
@@ -139,7 +199,7 @@ var Canvas;
 
     fill: function (style) {
       this.color(style);
-      context.fillStyle = color;
+      drawText('fill');
       context.fill();
       context.closePath();
 
