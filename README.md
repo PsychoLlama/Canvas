@@ -56,6 +56,14 @@ Using `.square` simply ensures that your shape is drawn as a square. It uses the
 
 Draw a line onto the canvas without worrying about `beginPath` or `closePath`. You can pass in `x` and `y` as arguments or as an object. Width is figured by the last setting (`.width()`, `.height()`).
 
+## .text(String)
+
+To draw strings onto the canvas, use `.text`. `stroke` or `fill` to paint it.
+
+## .font(String)
+
+Choose your font size and/or font family by passing in a string, such as '15rem helvetica'. It defaults to 18px sans-serif.
+
 ## .color(String)
 
 This will set the color for the shape you're about to draw.
@@ -78,10 +86,9 @@ It's a convinience method that forces your shape into a ratio, like 16:9. It's c
 
 ## plans for this library
 
-Well, that covered all the API. You'll notice it's pretty brief. You might also notice that it doesn't have support for circles. That doesn't mean I hate circles, I just never needed to draw them. I'm expecting to plug them in soon (it can't be that hard, right?). Also, radians? Really? Okay, if you're a mathematician you'll smile. But I want a choice. So here's a rundown of the features I want in canvas.js:
+Well, that covered all the API. You'll notice it's pretty brief. You might also notice that it doesn't have support for circles. That doesn't mean I hate circles, I just never needed to draw them. I'm expecting to plug them in soon (it can't be that hard, right?). Also, radians? Really? Okay, if you're a mathematician you'll smile. But I want a choice. So here's a rundown of the features I'd like to see in canvas.js:
 
 - circles (rad/deg)
-- text
 - images
 - gradients
 
