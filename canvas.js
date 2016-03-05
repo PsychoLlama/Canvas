@@ -169,6 +169,17 @@ var Canvas;
       return this;
     },
 
+		image: function (img) {
+			this.context.drawImage(
+				img,
+				position.x,
+				position.y,
+				width,
+				height
+			);
+			return this;
+		},
+
     font: function (input) {
       var family, size, height = /\s?\d+(\w+)?/;
 
