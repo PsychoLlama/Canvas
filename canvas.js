@@ -96,10 +96,12 @@ var Canvas;
       return this;
     },
 
-    size: function (shape) {
-      return this
-        .width(shape.width)
-        .height(shape.height);
+    size: function (x, y) {
+			if (typeof y !== 'number') {
+				y = x.height;
+				x = x.width;
+			}
+      return this.width(x).height(y);
     },
 
     ratio: function (string) {

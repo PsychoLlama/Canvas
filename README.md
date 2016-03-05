@@ -44,6 +44,10 @@ Set the width of your shape with this method. It will remember your setting unti
 
 Same behavior as [`.width`](#widthnumber).
 
+## .size(Object/x, y)
+
+Set the width and height at once by passing an object with `width` and/or `height` properties, or pass the width and height values as parameters.
+
 ## .rect(Object/x, y)
 
 We're starting with the basics. `.rect`, as you might guess, draws a rectangle onto the canvas. It can either take `x` and `y` as arguments, or as an object.
