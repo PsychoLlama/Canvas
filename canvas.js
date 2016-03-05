@@ -226,6 +226,19 @@ var Canvas;
       width = c.width;
 
       return this.rect(0, 0).fill(style || 'white');
-    }
+    },
+
+		get value() {
+			return this.canvas.toDataURL();
+		},
+		set value(src) {
+			var canvas, img = new Image();
+			canvas = this;
+			img.onload = function () {
+				canvas.image(img);
+			}
+			img.src = src;
+			return this;
+		}
   };
 }());

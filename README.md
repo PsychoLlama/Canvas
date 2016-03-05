@@ -92,6 +92,10 @@ This will clear the canvas. The optional color sets the background, but if none 
 
 It's a convinience method that forces your shape into a ratio, like 16:9. It's context specific, so if you set the height before calling this method, it'll assume the ratio relates to height.
 
+## .value
+
+Returns the raw canvas image data. You can also set the value with a previous canvas export like so: `canvas.value = 'data:image/png;base64,iVBORw0...'`. Note that setting the value is asynchronous. To have finer async control, create a new &lt;img&gt; element and use the `.image` method to set the value instead.
+
 ## plans for this library
 
 Well, that covered all the API. You'll notice it's pretty brief. You might also notice that it doesn't have support for circles. That doesn't mean I hate circles, I just never needed to draw them. I'm expecting to plug them in soon (it can't be that hard, right?). Also, radians? Really? Okay, if you're a mathematician you'll smile. But I want a choice. So here's a rundown of the features I'd like to see in canvas.js:
