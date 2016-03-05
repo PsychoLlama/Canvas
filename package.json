@@ -1,0 +1,27 @@
+{
+  "name": "simple-canvas",
+  "version": "0.1.0",
+  "description": "A terse, simplified interface for canvas",
+  "main": "canvas.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PsychoLlama/Canvas.git"
+  },
+  "keywords": [
+    "canvas",
+    "HTML5",
+    "simple",
+    "rendering",
+    "chained",
+    "terse"
+  ],
+  "author": "Jesse Gibson <jesse@gundb.io> (http://techllama.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PsychoLlama/Canvas/issues"
+  },
+  "homepage": "https://github.com/PsychoLlama/Canvas#readme"
+}

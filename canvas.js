@@ -242,3 +242,7 @@ var Canvas;
 		}
   };
 }());
+
+if (typeof module !== 'undefined') {
+	module.exports = Canvas;
+}
